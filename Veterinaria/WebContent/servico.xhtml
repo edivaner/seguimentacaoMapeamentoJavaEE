@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<p:growl life="5000"/>
+		<p:panelGrid columns="2">
+			<p:outputLabel value="Nome:" for="nome"/>
+			<p:inputText value="#{servicoBean.servico.nome}" id="nome" 
+							required="true" requiredMessage="Nome do serviço não pode esta em branco"/>
+							
+			<p:outputLabel value="Abreviação:" for="abrv"/>
+			<p:inputText value="#{servicoBean.servico.abreviacao}" id="abrv" 
+							required="true" requiredMessage="Abreviação do serviço não pode esta em branco"/>
+							
+			<p:outputLabel value="Preço:" for="preco"/>
+			<p:inputText value="#{servicoBean.servico.preco}" id="preco" 
+							required="true" requiredMessage="Preço do serviço não pode esta em branco"/>
+		</p:panelGrid>
+		<p:commandButton action="#{servicoBean.gravarServicos()}" value="Cadastrar Servico"
+						process="@form"	update="@form, :listaServicos"/>
+	</h:form>
+	
+	<br/><br/>
+	<h:form id="listaServicos">
+		<p:dataTable value="#{servicoBean.servicos}" var="servicoAtual" rows="5" paginator="true">
+			<p:column headerText="Identificação:">
+				<h:outputText value="#{servicoAtual.id}" />
+			</p:column>
+			
+			<p:column headerText="Nome:">
+				<h:outputText value="#{servicoAtual.nome}" />
+			</p:column>
+			
+			<p:column headerText="Abreviaçâo:">
+				<h:outputText value="#{servicoAtual.abreviacao}" />
+			</p:column>
+			
+			<p:column headerText="Preço">
+				<h:outputText value="#{servicoAtual.preco}" >
+					<f:convertNumber type="currency" currencySymbol="R$"/>
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+</body> 
+</html>

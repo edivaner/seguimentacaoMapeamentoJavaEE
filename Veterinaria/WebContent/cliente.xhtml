@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+	<h1>Cadastrando o cliente responsável pelo animal</h1>
+		<p:growl life="5000"/>
+		<p:panelGrid columns="4">
+			<p:outputLabel value="Nome do cliente:" for="nome"/>
+			<p:inputText value="#{clienteBean.cliente.nome}" id="nome" required="true" requiredMessage="Nome não pode esta em branco"/>
+			
+			<p:outputLabel value="Email" for="email"/>
+			<p:inputText value="#{clienteBean.cliente.email}" id="email"/>
+			
+			<p:outputLabel value="Telefone" for="tel"/>
+			<p:inputText value="#{clienteBean.cliente.telefone}" id="tel" required="true" requiredMessage="Telefone não pode esta em branco"/>
+			
+			<p:outputLabel value="Rua:" for="rua"/>
+			<p:inputText value="#{clienteBean.cliente.rua}" id="rua" required="true" requiredMessage="Rua não pode esta em branco"/>
+			
+			<p:outputLabel value="Número" for="num"/>
+			<p:inputText value="#{clienteBean.cliente.numero}" id="num" required="true" requiredMessage="Número da casa não pode esta em branco"/>
+			
+			<p:outputLabel value="Bairro:" for="bairro"/>
+			<p:inputText value="#{clienteBean.cliente.bairro}" id="bairro" required="true" requiredMessage="Bairro não pode esta em branco"/>
+			
+			<p:outputLabel value="Cidade:" for="cid"/>
+			<p:inputText value="#{clienteBean.cliente.cidade}" id="cid" required="true" requiredMessage="Cidade não pode esta em branco"/>
+		</p:panelGrid>
+		
+		<p:commandButton action="#{clienteBean.gravarCliente()}" value="Cadastrar cliente/Dono do animal" process="@form" update="@form, :listaCliente"/>
+	</h:form>
+	
+	<br/><br/>
+	<h:form id="listaCliente">
+		<p:dataTable value="#{clienteBean.clientes}" var="clienteAtual"  rows="5" paginator="true">
+			<p:column headerText="Nome:">
+				<h:outputText value="#{clienteAtual.nome}" />
+			</p:column>
+			
+			<p:column headerText="Rua:">
+				<h:outputText value="#{clienteAtual.rua}" />
+			</p:column>
+			
+			<p:column headerText="Número residencial:">
+				<h:outputText value="#{clienteAtual.numero}" />
+			</p:column>
+			
+			<p:column headerText="Bairro:">
+				<h:outputText value="#{clienteAtual.bairro}" />
+			</p:column>
+			
+			<p:column headerText="Cidade:">
+				<h:outputText value="#{clienteAtual.cidade}" />
+			</p:column>
+			
+			<p:column headerText="E-mail:">
+				<h:outputText value="#{clienteAtual.email}" />
+			</p:column>
+			
+			<p:column headerText="Telefone:">
+				<h:outputText value="#{clienteAtual.telefone}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+
+</body> 
+</html>

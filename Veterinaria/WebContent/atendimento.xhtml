@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<h1>Cadastrando atendimento</h1>
+		<p:growl life="5000" id="msg"/>
+		<p:panelGrid columns="2">
+			<p:outputLabel value="Entrada:" for="ent"/>
+			<p:calendar value="#{atendimentoBean.atendimento.dataHoraEntrada}" id="ent" 
+						showOn="button" mask="true" pattern="dd/MM/yyyy hh:mm:ss" timeZone="GMT-3"
+						required="true" requiredMessage="Data não pode esta em branco"/>
+						
+			<p:outputLabel value="Saida:" for="saida"/>
+			<p:calendar value="#{atendimentoBean.atendimento.dataHoraSaida}" id="saida" 
+						showOn="button" mask="true" pattern="dd/MM/yyyy"/>
+						
+			<p:outputLabel value="Tipo de entrega:" for="entrega"/>
+			<p:inputText value="#{atendimentoBean.atendimento.tipoEntrega}" id="entrega"/>
+			
+			<p:outputLabel value="Pet:" />
+			<p:selectOneMenu value="#{atendimentoBean.idAnimal}">
+				<f:selectItem itemLabel="Selecione o Pet" itemValue="0"/>
+				<f:selectItems value="#{atendimentoBean.animais}" var="petAtual"
+								itemLabel="#{petAtual.nome}" itemValue="#{petAtual.id}"/>
+			</p:selectOneMenu>
+			</p:panelGrid>
+			<p:fieldset id="fieldServicos">
+				<h:panelGrid columns="3">
+					<p:outputLabel value="Servicos:" for="serv"/>
+					<p:selectOneMenu value="#{atendimentoBean.idServico}" id="serv">
+						<f:selectItem itemValue="0" itemLabel="Selecione pelo menos um serviço..." />
+						<f:selectItems value="#{atendimentoBean.servicos}" var="servicoAtual" 
+						itemLabel="#{servicoAtual.nome}" itemValue="#{servicoAtual.id}"/>
+					</p:selectOneMenu>
+					
+					<p:commandButton action="#{atendimentoBean.addServico()}" value="Adicionar serviço" 
+						process="fieldServicos" update="fieldServicos, msg"/>
+				</h:panelGrid>
+				
+				<p:dataTable value="#{atendimentoBean.atendimento.servicos}" var="servicoAtend">
+					<p:column> <h:outputText value="#{servicoAtend.nome}"/> </p:column>
+				</p:dataTable>
+			</p:fieldset>
+		<p:commandButton action="#{atendimentoBean.gravarAtendimento()}" value="Cadastrar" process="@form" update="@form, :listAtend" />
+	</h:form>
+	
+	<h:form id="listAtend">
+		<p:dataTable value="#{atendimentoBean.atendimentos}" var="atendAtual" rows="5" paginator="true">
+			<p:column headerText="identificação">
+				<h:outputText value="#{atendAtual.id}" />
+			</p:column>
+			
+			<p:column headerText="Data de chegada">
+				<h:outputText value="#{atendAtual.dataHoraEntrada}">
+					<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" timeZone="GMT-3"/>
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Data de saida">
+				<h:outputText value="#{atendAtual.dataHoraSaida}">
+					<f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss" timeZone="GMT-3"/>
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="Pet:">
+				<h:outputText value="#{atendAtual.animal}" />
+			</p:column>
+			
+			<p:column headerText="Dono">
+				<h:outputText value="#{atendAtual.dono}" />
+			</p:column>
+			
+			<p:column headerText="serviços">
+				<h:outputText value="#{atendAtual.servicos}" />
+			</p:column>
+			
+			<p:column headerText="Tipo de entrega">
+				<h:outputText value="#{atendAtual.tipoEntrega}" />
+			</p:column>
+			
+			<p:column headerText="Resumo">
+				<h:outputText value="#{atendAtual.resumo}" />
+			</p:column>
+			
+			<p:column headerText="Finalizar">
+				<p:commandButton action="#{atendimentoBean.finalizar(atendAtual)}" value="Finalizar atendimento"/>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	
+</body> 
+</html>

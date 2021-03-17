@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+	<h1>PET SHOP e VETERINARIA</h1>
+	<h:form>
+		<p:panelGrid columns="4">
+			<p:commandLink action="cliente?faces-redirect=true" value="Gerenciar Cliente" />
+			<p:commandLink action="animal?faces-redirect=true" value="Gerenciar Animal" />
+			<p:commandLink action="servico?faces-redirect=true" value="Gerenciar Serviço" />
+			<p:commandLink action="atendimento?faces-redirect=true" value="Gerenciar Atendimento" />
+		</p:panelGrid>
+	</h:form>
+</body> 
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+	<h1>Cadastrando o PET</h1>
+	<p:growl life="5000"/>
+		<p:panelGrid columns="4">
+			<p:outputLabel value="Nome:" for="nome"/>
+			<p:inputText value="#{animalBean.animal.nome}" id="nome" required="true" requiredMessage="Nome do animal não pode esta em branco"/>
+		
+			<p:outputLabel value="Genero:" for="genero"/>
+			<p:inputText value="#{animalBean.animal.genero}" id="genero" required="true" requiredMessage="O genero do animal não pode esta vazio"/>
+			
+			<p:outputLabel value="Idade:" for="idade"/>
+			<p:inputText value="#{animalBean.animal.idade}" id="idade" required="true" requiredMessage="A idade do animal não pode esta vazia."/>	
+			
+			<p:outputLabel value="Espécie:" for="esp"/>
+			<p:inputText value="#{animalBean.animal.espece}" id="esp" required="true" requiredMessage="Informe a especie do Pet"/>
+			
+			<p:outputLabel value="Dono:" />
+			<p:selectOneMenu value="#{animalBean.idDono}">
+				<f:selectItem itemLabel="Selecione o dono" itemValue="0"/>
+				<f:selectItems value="#{animalBean.clientes}" var="donoAtual"
+								itemLabel="#{donoAtual.nome}" itemValue="#{donoAtual.id}"/>
+			</p:selectOneMenu>
+		</p:panelGrid>
+		<p:commandButton action="#{animalBean.gravarAnimal()}" value="Gravar animal" process="@form" update="@form, :listaAnimais"/>
+	</h:form>
+	
+	<br/><br/>
+	<h:form id="listaAnimais">
+		<p:dataTable value="#{animalBean.animais}" var="animalAtual" rows="5" paginator="true">
+			<p:column headerText="Nome:">
+				<h:outputText value="#{animalAtual.nome}" />
+			</p:column>
+			
+			<p:column headerText="Genero:">
+				<h:outputText value="#{animalAtual.genero}" />
+			</p:column>
+			
+			<p:column headerText="idade:">
+				<h:outputText value="#{animalAtual.idade}" />
+			</p:column>
+			
+			<p:column headerText="Espécie:">
+				<h:outputText value="#{animalAtual.espece}" />
+			</p:column>
+			
+			<p:column headerText="Dono:">
+				<h:outputText value="#{animalAtual.dono.nome}" />
+			</p:column>
+		</p:dataTable>
+	</h:form>
+	
+</body> 
+</html>
